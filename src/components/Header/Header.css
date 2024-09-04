@@ -1,7 +1,7 @@
 .header {
-   padding-bottom: 1.5rem;
-   display: flex;
-   justify-content: flex-end;
+    padding-bottom: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .button-auth {
@@ -12,9 +12,8 @@
     border-radius: 0.5rem;
     border: none;
     font-weight: 500;
-
 }
 
 .button-auth:hover {
-	background-color: var( --color-button-hover-bg);
-  }
+    background-color: var(--color-button-hover-bg);
+}

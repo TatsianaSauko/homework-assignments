@@ -3,9 +3,9 @@ import { Header } from "../../components/Header";
 
 export const RootLayout: React.FC = () => {
     return (
-      <>
-     <Header />
-     <Outlet/>
-      </>
+        <>
+            <Header />
+            <Outlet />
+        </>
     );
-  };
+};
