@@ -7,6 +7,7 @@ import { authenticateUser } from "../../api/authService";
 import { schema } from "../../utils/validation";
 import { login } from "../../redux/slices/authSlice";
 import { FormData } from "../../types/types";
+import { Notification } from "../Notification";
 
 import "./AuthForm.css";
 
@@ -20,6 +21,7 @@ export const AuthForm = () => {
         resolver: yupResolver(schema),
     });
     const [message, setMessage] = useState("");
+    const [showNotification, setShowNotification] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -40,6 +42,12 @@ export const AuthForm = () => {
         } catch (error) {
             setMessage("An error occurred. Please try again later.");
         }
+
+        setShowNotification(true);
+    };
+
+    const handleCloseNotification = () => {
+        setShowNotification(false);
     };
 
     return (
@@ -71,7 +79,9 @@ export const AuthForm = () => {
                     Login
                 </button>
             </form>
-            {message && <p>{message}</p>}
+            {showNotification && (
+                <Notification message={message} onClose={handleCloseNotification} />
+            )}
         </div>
     );
 };

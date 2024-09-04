@@ -19,3 +19,8 @@ export type AuthData = {
 export type AuthState = {
     email: string | null;
 };
+
+export type NotificationProps = {
+    message: string;
+    onClose: () => void;
+};
