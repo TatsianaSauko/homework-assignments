@@ -1,29 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
 import './Header.css';
+import { RootState } from '../../redux/configure-store';
+import { logout } from '../../redux/slices/authSlice';
 
 export const Header: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const email = useSelector((state: RootState) => state.auth.email);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const email = localStorage.getItem('email');
-    setIsLoggedIn(!!email);
-  }, []);
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
     navigate('/auth');
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('email');
-    setIsLoggedIn(false);
+    dispatch(logout());
     navigate('/auth');
   };
 
   return (
     <div className='header'>
-      {isLoggedIn ? (
+      {email ? (
         <button onClick={handleLogout} className='button-auth'>Logout</button>
       ) : (
         <button onClick={handleLogin} className='button-auth'>Login</button>

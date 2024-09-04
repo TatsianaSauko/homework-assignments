@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import './AuthForm.css';
 import { schema } from '../../utils/validation';
 import { authenticateUser } from '../../api/authService';
 import { FormData } from '../../types/types';
-
+import { login } from '../../redux/slices/authSlice';
 
 export const AuthForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -14,6 +16,7 @@ export const AuthForm = () => {
   });
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmit = async (data: FormData) => {
     const { email, password } = data;
@@ -24,7 +27,7 @@ export const AuthForm = () => {
 
       if (response.ok) {
         setMessage('Login successful!');
-        localStorage.setItem('email', email);
+        dispatch(login(email));
         navigate('/');
       } else {
         setMessage('Login failed. Please check your credentials.');
@@ -37,14 +40,13 @@ export const AuthForm = () => {
   return (
     <div className="auth-form">
       <h2 className="auth-form__title">Login</h2>
-      <form onSubmit={handleSubmit(onSubmit)}  className='auth-form__wrapper'>
+      <form onSubmit={handleSubmit(onSubmit)} className='auth-form__wrapper'>
         <div>
           <label className='auth-form__label'>Email:</label>
           <input
             type="email"
             {...register('email')}
             className='auth-form__input'
-
           />
           {errors.email ? (
             <div className='auth-form__error'>{errors.email.message}</div>
@@ -58,7 +60,6 @@ export const AuthForm = () => {
             type="password"
             {...register('password')}
             className='auth-form__input'
-
           />
           {errors.password ? (
             <div className='auth-form__error'>{errors.password.message}</div>
@@ -72,4 +73,5 @@ export const AuthForm = () => {
     </div>
   );
 };
+
 

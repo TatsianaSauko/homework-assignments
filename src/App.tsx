@@ -3,9 +3,12 @@ import { AuthForm } from './components/AuthForm';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { RootLayout } from './layouts/RootLayout';
+import { useSelector } from 'react-redux';
+import { RootState } from './redux/configure-store';
+
 
 export default function App() {
-  const email = localStorage.getItem('email');
+  const email = useSelector((state: RootState) => state.auth.email);
 
   return (
     <Router>
